@@ -953,6 +953,9 @@ func (c *Command) execute(a []string) (err error) {
 	}
 
 	if !c.Runnable() {
+		if args := c.Flags().Args(); len(args) > 0 {
+			return fmt.Errorf("unknown command %q for %q", args[0], c.CommandPath())
+		}
 		return flag.ErrHelp
 	}
 
